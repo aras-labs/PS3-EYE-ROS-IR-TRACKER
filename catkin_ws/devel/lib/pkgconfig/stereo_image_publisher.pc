@@ -1,0 +1,8 @@
+prefix=/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/devel
+
+Name: stereo_image_publisher
+Description: Description of stereo_image_publisher
+Version: 0.0.0
+Cflags: -I/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/devel/include
+Libs: -L/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/devel/lib 
+Requires: roscpp rospy message_runtime

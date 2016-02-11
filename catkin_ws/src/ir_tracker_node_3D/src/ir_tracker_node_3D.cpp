@@ -11,6 +11,9 @@
 #include <geometry_msgs/Pose.h>
 #include <tf/transform_broadcaster.h>
 
+#include <ir_tracker_node_3D/irtracker.h>
+static  ir_tracker_node_3D::irtracker tracker;
+
 using namespace cv;
 
 static Mat leftCamF;
@@ -57,10 +60,16 @@ void ImageCalback(const stereo_image_publisher::stereo_camera::ConstPtr& msg)
   leftCamMarker.getPixelPos(leftCamF,&leftCamX,&leftCamY);
   rightCamMrker.getPixelPos(rightCamF,&rightCamX,&rightCamY);
   stereoProcessor->Process2(rightCamX,rightCamY,leftCamX,leftCamY,&posX,&posY,&posZ);
-  pos_res.position.x=posX;
-  pos_res.position.y=posY;
-  pos_res.position.z=posZ;
-  pos_pub.publish(pos_res);
+  tracker.pose.position.x=posX;
+  tracker.pose.position.y=posY;
+  tracker.pose.position.z=posZ;
+  tracker.header.stamp=ros::Time::now();
+  pos_pub.publish(tracker);
+
+  //pos_res.position.x=posX;
+  //pos_res.position.y=posY;
+  //pos_res.position.z=posZ;
+  //pos_pub.publish(pos_res);
   static tf::TransformBroadcaster br;
   tf::Transform transfrm;
   transfrm.setOrigin(tf::Vector3(posX,posY,posZ));
@@ -73,7 +82,7 @@ int main(int argc, char *argv[])
   ros::init(argc, argv, "ir_tracker_node_3d");
   ros::NodeHandle nh;
   ros::Subscriber sub1 = nh.subscribe("/aras_stereo_camera", 100, ImageCalback);
-  pos_pub=nh.advertise<geometry_msgs::Pose>("\ir_tracker\pose", 1000);
+  pos_pub=nh.advertise<ir_tracker_node_3D::irtracker>("\ir_tracker", 1000);
 
   //std::string pkg_path = ros::package::getPath("ir_tracker_node_3D");
   //sensor_msgs::CameraInfo leftCameraInfo;

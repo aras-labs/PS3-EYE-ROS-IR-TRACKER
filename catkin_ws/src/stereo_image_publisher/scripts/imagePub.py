@@ -11,8 +11,22 @@ from cv_bridge import CvBridge, CvBridgeError
 from stereo_image_publisher.msg import stereo_camera
 from camera_calibration_parsers import readCalibration
 from subprocess import call
-left_camera=1
-right_camera=0
+import subprocess
+tst=subprocess.Popen(['v4l2-ctl', '--list-devices'],stdout=subprocess.PIPE)
+comInfo = tst.stdout.read()
+info = comInfo.split('USB Camera')[1:]
+camString = ['0-5', '0-6']
+def cam_sorder(camString,info):
+    found={}
+    for lst in info:
+        for idx in camString:
+            if lst.find(idx) is not -1:
+                found[idx]=lst[lst.find('video')+5]
+    return found
+cams=cam_sorder(camString,info)
+left_camera=cams['0-5']
+right_camera=cams['0-6']
+
 class image_converter(object):
   def __init__(self):
     self.pub = rospy.Publisher("aras_stereo_camera",stereo_camera)
@@ -24,8 +38,8 @@ class image_converter(object):
     self.bridge = CvBridge()
     self.leftCap = cv2.VideoCapture(int(left_camera))
     self.rightCap = cv2.VideoCapture(int(right_camera))
-    self.leftCap.set(cv2.CAP_PROP_FPS,120)
-    self.rightCap.set(cv2.CAP_PROP_FPS,120)
+    self.leftCap.set(cv2.CAP_PROP_FPS,50)
+    self.rightCap.set(cv2.CAP_PROP_FPS,50)
     os.system(os.path.join(self.script_dir,'camConfig.sh')) #Set the camera Gain and Exposure Parameters
     left_camera_name, self.left_camera_info = readCalibration(os.path.join(self.script_dir,'left.yaml'))
     right_camera_name, self.right_camera_info = readCalibration(os.path.join(self.script_dir,'right.yaml'))

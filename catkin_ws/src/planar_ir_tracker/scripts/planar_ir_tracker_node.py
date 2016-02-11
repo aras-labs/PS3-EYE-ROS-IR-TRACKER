@@ -5,6 +5,14 @@ from geometry_msgs.msg import Pose2D
 import cv2
 import numpy as np
 import yaml
+import socket
+import struct
+UDP_IP = ""
+UDP_PORT = 6000
+M_UDP_IP = '192.168.1.3'
+M_UDP_PORT = 6000
+Msock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+
 from pyclustering.cluster.bsas import bsas
 
 class undistrodMarkers:
@@ -86,7 +94,7 @@ def node_process():
     	H=np.array(yaml.safe_load(f)).reshape(3,3)
     distorsionProcessor = undistrodMarkers('ost.yaml')
     markerExteractor_inst=markerExteractor()
-    cap=cv2.VideoCapture('debug_video.avi')
+    cap=cv2.VideoCapture('/dev/video0')
     pub = rospy.Publisher('planar_pose', Pose2D, queue_size=10)
     rospy.init_node('aras_planar_tracker_node', anonymous=True)
     pose_marker=Pose2D()
@@ -107,6 +115,7 @@ def node_process():
 	else:
 		break
 	pub.publish(pose_marker)
+	Msock.sendto(struct.pack('2Iddd',0,0,pose_marker.x,pose_marker.y,10,), (M_UDP_IP, M_UDP_PORT))
 
 if __name__ == '__main__':
     try:

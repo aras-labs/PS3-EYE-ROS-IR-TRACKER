@@ -22,12 +22,14 @@ class image_converter(object):
     self.script_dir = os.path.dirname(os.path.realpath(__file__))
     self.bridge = CvBridge()
     self.Cap = cv2.VideoCapture(int(camera_id))
-    self.Cap.set(cv2.CAP_PROP_FPS,120)
+    self.Cap.set(cv2.CAP_PROP_FPS,50)
     #os.system(os.path.join(self.script_dir,'camConfig.sh')) #Set the camera Gain and Exposure Parameters
     camera_name, self.camera_info = readCalibration(os.path.join(self.script_dir,'cam_params.yaml'))
   def start(self):
     while not rospy.is_shutdown():
         ret, Frame = self.Cap.read()
+#        Frame = cv2.cvtColor(Frame, cv2.COLOR_BGR2GRAY)
+        Frame = cv2.cvtColor(Frame[:,:,2], cv2.COLOR_BAYER_BG2BGRA)
         Frame = cv2.cvtColor(Frame, cv2.COLOR_BGR2GRAY)
         try:
           self.message.Camera=self.bridge.cv2_to_imgmsg(Frame, "mono8")

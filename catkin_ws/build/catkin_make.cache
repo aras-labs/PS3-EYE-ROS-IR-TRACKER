@@ -1,0 +1,2 @@
+ar_tag_toolbox:camera_image_publisher:ir_tracker_node_3D:ir_tracker_node_6D:planar_ir_tracker:stereo_image_publisher
+-DCATKIN_DEVEL_PREFIX=/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install -G Unix Makefiles

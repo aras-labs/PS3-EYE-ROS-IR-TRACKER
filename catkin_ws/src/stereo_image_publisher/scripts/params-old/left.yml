@@ -1,0 +1,32 @@
+%YAML:1.0
+---
+calibration_time: "‫شنبه ۰۵ اوت ۱۷، ۰۵:۳۶:۱۲‬"
+image_width: 640
+image_height: 480
+board_width: 8
+board_height: 6
+square_size: 3.9000000804662704e-02
+aspectRatio: 1.
+flags: 2
+camera_name: "narrow_stereo/left"
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [623.631578, 0., 165.361029, 0., 622.207174, 282.492511, 0., 0., 1.]
+distortion_model: plumb_bob
+distortion_coefficients: !!opencv-matrix
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.394942, 0.143773, -0.000480, 0.001111, 0.000000]
+rectification_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [0.998506, -0.012754, -0.053127, 0.012312,  0.999887, -0.008638, 0.053232, 0.007971, 0.998550]
+projection_matrix: !!opencv-matrix
+  rows: 3
+  cols: 4
+  dt: d
+  data: [510.786765, 0.000000, 314.900612, 0.000000, 0.000000, 510.786765, 265.367477, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

@@ -1,0 +1,8 @@
+prefix=/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install
+
+Name: ar_tag_toolbox
+Description: Description of ar_tag_toolbox
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/rooholla/ROS/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install/lib 
+Requires: 
