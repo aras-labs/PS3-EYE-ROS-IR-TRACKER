@@ -1,8 +1,0 @@
-prefix=/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/devel
-
-Name: ir_tracker_node_6D
-Description: Description of ir_tracker_node_6D
-Version: 0.1.0
-Cflags: 
-Libs: -L/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/devel/lib 
-Requires: 

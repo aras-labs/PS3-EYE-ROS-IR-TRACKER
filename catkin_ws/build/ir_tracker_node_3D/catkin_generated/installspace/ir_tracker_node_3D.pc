@@ -1,8 +1,0 @@
-prefix=/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install
-
-Name: ir_tracker_node_3D
-Description: Description of ir_tracker_node_3D
-Version: 0.0.0
-Cflags: -I/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install/include
-Libs: -L/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install/lib 
-Requires: 
