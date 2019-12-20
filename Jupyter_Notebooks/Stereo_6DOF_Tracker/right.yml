@@ -1,0 +1,31 @@
+
+calibration_time: "‫شنبه ۰۵ اوت ۱۷، ۰۵:۳۶:۱۲‬"
+image_width: 640
+image_height: 480
+board_width: 8
+board_height: 6
+square_size: 3.9000000804662704e-02
+aspectRatio: 1.
+flags: 2
+camera_name: "narrow_stereo/right"
+camera_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [626.859685, 0., 422.665392, 0., 632.593032, 244.875113, 0., 0., 1.]
+distortion_model: "plumb_bob"
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.378270, 0.122008, 0.001265, -0.002244, 0.000000]
+rectification_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [0.999970, 0.000425, -0.007669, -0.000361, 0.999965, 0.008310, 0.007673, -0.008306,  0.999936]
+projection_matrix:
+  rows: 3
+  cols: 4
+  dt: d
+  data: [510.786765, 0.000000, 314.900612, -245.291005, 0.000000, 510.786765, 265.367477, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

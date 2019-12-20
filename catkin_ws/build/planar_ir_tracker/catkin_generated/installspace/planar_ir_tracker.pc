@@ -1,0 +1,8 @@
+prefix=/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install
+
+Name: planar_ir_tracker
+Description: Description of planar_ir_tracker
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/rouholla/Robotics/PS3-EYE-ROS-IR-TRACKER/catkin_ws/install/lib 
+Requires: 
