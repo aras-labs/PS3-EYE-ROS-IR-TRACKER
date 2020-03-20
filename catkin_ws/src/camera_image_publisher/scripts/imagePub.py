@@ -9,13 +9,21 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
-from camera_image_publisher.msg import mono_camera
 from camera_calibration_parsers import readCalibration
 from subprocess import call
 import subprocess
 from camera_image_publisher.srv import set_gain, set_exposure
 import threading
 import time
+from dynamic_reconfigure.server import Server
+from camera_image_publisher.cfg import camera_cfgsConfig
+
+def cfgs_callback(config, level):
+    subprocess.Popen(['v4l2-ctl', '-d', '/dev/video'+str(camera_id),\
+                      '-c', 'gain='+str(config.gain)],stdout=subprocess.PIPE)
+    subprocess.Popen(['v4l2-ctl', '-d', '/dev/video'+str(camera_id),\
+                      '-c', 'exposure='+str(config.exposure)],stdout=subprocess.PIPE)
+    return config
 
 def handle_set_gain(req):
     subprocess.Popen(['v4l2-ctl', '-d', '/dev/video'+str(camera_id),\
@@ -55,17 +63,17 @@ class image_grabber(object):
     while self.kill is not True:
         ret, Frame = self.Cap.read()
         self.camera_info.header.stamp=rospy.Time.now()
-        self.image.header.stamp=self.camera_info.header.stamp
         Frame = cv2.cvtColor(Frame[:,:,2], cv2.COLOR_BAYER_BG2BGRA)
         Frame = cv2.cvtColor(Frame, cv2.COLOR_BGR2GRAY)
         try:
           self.image=self.bridge.cv2_to_imgmsg(Frame, "mono8")
+          self.image.header.stamp=self.camera_info.header.stamp
           self.pub.publish(self.camera_info)
           self.pub_Image.publish(self.image)
         except CvBridgeError as e:
           print(e)
 
-rospy.init_node('camera_image_publisher', anonymous=True)
+rospy.init_node('camera_image_publisher')
 print("Node Initialized")
 gain_service=rospy.Service('set_gain',set_gain,handle_set_gain)
 gain_service=rospy.Service('set_exposure',set_exposure,handle_set_exposure)
@@ -100,6 +108,7 @@ subprocess.Popen(['v4l2-ctl', '-d', '/dev/video'+str(camera_id),\
 #Assign a thread for the image acquisition function
 ig = image_grabber()
 image_aqu=threading.Thread(target=ig.start)
+server=Server(camera_cfgsConfig,cfgs_callback)
 try:
     image_aqu.start()
     rospy.spin()
